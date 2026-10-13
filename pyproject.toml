@@ -1,0 +1,44 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "doc-files"
+description = "Read what PDF, Office, OpenDocument and EPUB files say, as a document model, text or Markdown"
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "craftware" }]
+requires-python = ">=3.10"
+dynamic = ["version"]
+# Core: standard library only. Office, OpenDocument and EPUB need nothing more.
+dependencies = []
+classifiers = [
+    "Development Status :: 2 - Pre-Alpha",
+    "Environment :: Console",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Office/Business",
+    "Topic :: Text Processing",
+]
+
+[project.optional-dependencies]
+pdf = ["pypdf>=5"]
+# The test suite builds its fixtures with the libraries that write these
+# formats, so they are real files from real writers.
+test = ["pytest", "pypdf>=5", "python-docx>=1.1", "python-pptx>=1.0", "openpyxl>=3.1", "odfpy>=1.4"]
+
+[project.scripts]
+doc-files = "doc_files.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/crftwr/doc-files"
+Repository = "https://github.com/crftwr/doc-files"
+
+[tool.setuptools.packages.find]
+include = ["doc_files*"]
+
+[tool.setuptools.dynamic]
+version = { attr = "doc_files.__version__" }
+
+[tool.pytest.ini_options]
+testpaths = ["test"]
